@@ -2,5 +2,6 @@
 
 int main()
 {
-    std::cout << "Hello World!\n";
+	std::cout << "NotinOOP Store System Baseline Booted.\n";
+	return 0;
 }
