@@ -24,5 +24,7 @@ public:
     ~NotinOOP();
 
     void run();
+    void handleCheckout();
+
     Fragrance* findFragrance(const char* name) const;
 };

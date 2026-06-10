@@ -39,6 +39,9 @@
     <ClCompile Include="NotinOOP_Core.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="NotinOOP_Logic.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enums.h">

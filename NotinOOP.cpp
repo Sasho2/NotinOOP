@@ -120,13 +120,45 @@ void NotinOOP::run() {
             }
         }
         else {
-            std::cout << "\n [ Buyer: " << loggedInUser->getUsername().c_str() << " ]\n";
-            std::cout << " 1. Logout\n";
+            Buyer* b = static_cast<Buyer*>(loggedInUser);
+            std::cout << "\n [ Buyer: " << b->getUsername().c_str() << " | Wallet: " << b->getBalance() << " EUR ]\n";
+            std::cout << " 1. Add to Cart\n";
+            std::cout << " 2. View Cart & Checkout\n";
+            std::cout << " 3. Add Funds\n";
+            std::cout << " 4. Logout\n";
             std::cout << " 0. Exit\n> ";
 
             std::cin >> choice;
             if (strcmp(choice, "0") == 0) break;
+
             if (strcmp(choice, "1") == 0) {
+                char name[128];
+                std::cout << "Enter fragrance name to buy: "; std::cin >> name;
+                Fragrance* f = findFragrance(name);
+                if (f) {
+                    if (f->getQuantity() > 0) {
+                        b->addToCart(f);
+                        std::cout << "[Success] Added to cart.\n";
+                    }
+                    else std::cout << "[!] Out of stock.\n";
+                }
+                else std::cout << "[!] Not found.\n";
+            }
+            else if (strcmp(choice, "2") == 0) {
+                b->viewCart();
+                if (b->getCartCount() > 0) {
+                    std::cout << "Proceed to checkout? (y/n): ";
+                    char ans; std::cin >> ans;
+                    if (ans == 'y') handleCheckout();
+                }
+            }
+            else if (strcmp(choice, "3") == 0) {
+                double amt;
+                std::cout << "Amount (EUR): "; std::cin >> amt;
+                b->addToBalance(amt);
+                std::cout << "[Success] Funds added.\n";
+            }
+            else if (strcmp(choice, "4") == 0) {
                 loggedInUser = nullptr;
                 std::cout << "[Success] Logged out.\n";
             }
