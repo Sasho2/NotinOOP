@@ -1,17 +1,32 @@
 #pragma once
 #include "User.h"
+#include "Fragrance.h"
 
 class Buyer : public User {
 private:
     double balance;
 
+    Fragrance** cart;
+    int cartCount;
+    int cartCapacity;
+
+    void resizeCart();
+
 public:
     Buyer(int id, const char* uname, const char* pass);
-    ~Buyer() override = default;
+    ~Buyer() override;
 
     bool isAdmin() const override;
 
     void addToBalance(double amount);
     double getBalance() const;
     void deductBalance(double amount);
+
+    void addToCart(Fragrance* f);
+    bool removeFromCart(const char* fName);
+    void viewCart() const;
+    void emptyCart();
+
+    int getCartCount() const { return cartCount; }
+    Fragrance* getCartItem(int index) const { return cart[index]; }
 };
