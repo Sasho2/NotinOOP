@@ -1,7 +1,8 @@
-#include <iostream>
+#include "NotinOOP.h"
 
 int main()
 {
-	std::cout << "NotinOOP Store System Baseline Booted.\n";
+	NotinOOP store;
+	store.run();
 	return 0;
 }

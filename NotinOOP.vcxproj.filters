@@ -33,6 +33,12 @@
     <ClCompile Include="Buyer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="NotinOOP.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NotinOOP_Core.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enums.h">
@@ -51,6 +57,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Buyer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NotinOOP.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
