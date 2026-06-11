@@ -45,6 +45,9 @@
     <ClCompile Include="Purchase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="NotinOOP_Database.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enums.h">

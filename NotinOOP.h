@@ -3,6 +3,7 @@
 #include "Buyer.h"
 #include "Admin.h"
 #include "Fragrance.h"
+#include "Purchase.h"
 
 class NotinOOP {
 private:
@@ -14,23 +15,27 @@ private:
     int catalogCount;
     int catalogCapacity;
 
-    User* loggedInUser;
-
     Purchase** allPurchases;
     int purchCount;
     int purchCapacity;
-    int nextPurchaseId;
 
-    void resizePurchases();
+    User* loggedInUser;
+
+    int nextPurchaseId;
+    int nextReviewId;
+
     void resizeUsers();
     void resizeCatalog();
+    void resizePurchases();
 
 public:
     NotinOOP();
     ~NotinOOP();
 
     void run();
+    Fragrance* findFragrance(const char* name) const;
     void handleCheckout();
 
-    Fragrance* findFragrance(const char* name) const;
+    void saveToFile(const char* filename) const;
+    void loadFromFile(const char* filename);
 };

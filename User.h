@@ -17,5 +17,7 @@ public:
     const String& getUsername() const { return username; }
     bool checkPassword(const char* pass) const { return password == String(pass); }
 
-    virtual bool isAdmin() const = 0;
+    const String& getPassword() const { return password; }
+
+    virtual bool isAdmin() const = 0;   
 };

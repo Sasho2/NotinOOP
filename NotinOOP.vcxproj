@@ -130,6 +130,7 @@
     <ClCompile Include="Index.cpp" />
     <ClCompile Include="NotinOOP.cpp" />
     <ClCompile Include="NotinOOP_Core.cpp" />
+    <ClCompile Include="NotinOOP_Database.cpp" />
     <ClCompile Include="NotinOOP_Logic.cpp" />
     <ClCompile Include="Purchase.cpp" />
     <ClCompile Include="String.cpp" />
