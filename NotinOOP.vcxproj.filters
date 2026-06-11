@@ -48,6 +48,15 @@
     <ClCompile Include="NotinOOP_Database.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Discount.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BonusDiscount.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BrandDiscount.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enums.h">
@@ -72,6 +81,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Purchase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Discount.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BonusDiscount.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BrandDiscount.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
