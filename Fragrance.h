@@ -1,5 +1,6 @@
 #pragma once
 #include "String.h"
+#include "Review.h"
 #include "Enums.h"
 
 class Fragrance {
@@ -11,8 +12,18 @@ private:
     FragranceFamily family;
     int quantity;
 
+    Review** reviews;
+    int reviewCount;
+    int reviewCapacity;
+
+    void resizeReviews();
+
 public:
     Fragrance(int id, const char* n, Brand b, double p, FragranceFamily f, int q);
+    ~Fragrance();
+
+    Fragrance(const Fragrance&) = delete;
+    Fragrance& operator=(const Fragrance&) = delete;
 
     int getId() const;
     const String& getName() const;
@@ -23,4 +34,13 @@ public:
 
     void addQuantity(int amount);
     bool decreaseQuantity();
+
+    void addReview(Review* r);
+    double getRating() const;
+
+    int getReviewCount() const { return reviewCount; }
+    Review* getReview(int index) const { return reviews[index]; }
+
+    void printReviews() const;
+    void print() const;
 };

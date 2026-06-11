@@ -57,6 +57,9 @@
     <ClCompile Include="BrandDiscount.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Review.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enums.h">
@@ -90,6 +93,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BrandDiscount.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Review.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
