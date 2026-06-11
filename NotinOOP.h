@@ -16,6 +16,12 @@ private:
 
     User* loggedInUser;
 
+    Purchase** allPurchases;
+    int purchCount;
+    int purchCapacity;
+    int nextPurchaseId;
+
+    void resizePurchases();
     void resizeUsers();
     void resizeCatalog();
 

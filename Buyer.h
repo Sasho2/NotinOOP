@@ -1,6 +1,7 @@
 #pragma once
 #include "User.h"
 #include "Fragrance.h"
+#include "Purchase.h"
 
 class Buyer : public User {
 private:
@@ -10,7 +11,12 @@ private:
     int cartCount;
     int cartCapacity;
 
+    Purchase** purchases;
+    int purchCount;
+    int purchCapacity;
+
     void resizeCart();
+    void resizePurchases();
 
 public:
     Buyer(int id, const char* uname, const char* pass);
@@ -26,6 +32,9 @@ public:
     bool removeFromCart(const char* fName);
     void viewCart() const;
     void emptyCart();
+
+    void addPurchase(Purchase* p);
+    void viewPurchases() const;
 
     int getCartCount() const { return cartCount; }
     Fragrance* getCartItem(int index) const { return cart[index]; }

@@ -1,4 +1,4 @@
-#include "NotinOOP.h"
+﻿#include "NotinOOP.h"
 #include <iostream>
 
 void NotinOOP::handleCheckout() {
@@ -16,16 +16,23 @@ void NotinOOP::handleCheckout() {
     }
 
     if (buyer->getBalance() < total) {
-        std::cout << "[!] Insufficient funds! You need " << total << " EUR but have " << buyer->getBalance() << ".\n";
+        std::cout << "[!] Insufficient funds.\n";
         return;
     }
 
     buyer->deductBalance(total);
+    Purchase* newOrder = new Purchase(nextPurchaseId++, buyer->getId());
 
     for (int i = 0; i < buyer->getCartCount(); i++) {
-        buyer->getCartItem(i)->decreaseQuantity();
+        Fragrance* item = buyer->getCartItem(i);
+        newOrder->addFragrance(item, item->getPrice());
+        item->decreaseQuantity();
     }
 
+    if (purchCount == purchCapacity) resizePurchases();
+    allPurchases[purchCount++] = newOrder;
+    buyer->addPurchase(newOrder);
     buyer->emptyCart();
-    std::cout << "[?] Checkout complete! Paid: " << total << " EUR.\n";
+
+    std::cout << "[✓] Checkout complete! Order #" << newOrder->getId() << " is pending.\n";
 }

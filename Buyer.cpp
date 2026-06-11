@@ -10,11 +10,12 @@ void Buyer::resizeCart() {
 }
 
 Buyer::Buyer(int id, const char* uname, const char* pass)
-    : User(id, uname, pass), balance(0.0), cart(nullptr), cartCount(0), cartCapacity(0) {
+    : User(id, uname, pass), balance(0.0), cart(nullptr), cartCount(0), cartCapacity(0), purchases(nullptr), purchCount(0), purchCapacity(0) {
 }
 
 Buyer::~Buyer() {
     delete[] cart;
+    delete[] purchases;
 }
 
 bool Buyer::isAdmin() const { 
@@ -66,4 +67,28 @@ void Buyer::viewCart() const {
 
 void Buyer::emptyCart() {
     cartCount = 0;
+}
+
+void Buyer::resizePurchases() {
+    purchCapacity = (purchCapacity == 0) ? 2 : purchCapacity * 2;
+    Purchase** temp = new Purchase * [purchCapacity];
+    for (int i = 0; i < purchCount; i++) temp[i] = purchases[i];
+    delete[] purchases;
+    purchases = temp;
+}
+
+void Buyer::addPurchase(Purchase* p) {
+    if (purchCount == purchCapacity) resizePurchases();
+    purchases[purchCount++] = p;
+}
+
+void Buyer::viewPurchases() const {
+    std::cout << "\n--- Order History ---\n";
+    if (purchCount == 0) {
+        std::cout << "No orders yet.\n";
+        return;
+    }
+    for (int i = 0; i < purchCount; i++) {
+        purchases[i]->show();
+    }
 }

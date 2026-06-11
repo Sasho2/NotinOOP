@@ -16,9 +16,16 @@ void NotinOOP::resizeCatalog() {
     catalog = temp;
 }
 
-NotinOOP::NotinOOP() : users(nullptr), userCount(0), userCapacity(0),catalog(nullptr), 
-catalogCount(0), catalogCapacity(0),loggedInUser(nullptr) {}
+void NotinOOP::resizePurchases() {
+    purchCapacity = (purchCapacity == 0) ? 2 : purchCapacity * 2;
+    Purchase** temp = new Purchase * [purchCapacity];
+    for (int i = 0; i < purchCount; i++) temp[i] = allPurchases[i];
+    delete[] allPurchases;
+    allPurchases = temp;
+}
 
+NotinOOP::NotinOOP() : users(nullptr), userCount(0), userCapacity(0),catalog(nullptr), 
+catalogCount(0), catalogCapacity(0),loggedInUser(nullptr), allPurchases(nullptr), purchCount(0), purchCapacity(0), nextPurchaseId(0) {}
 
 NotinOOP::~NotinOOP() {
     for (int i = 0; i < userCount; i++) delete users[i];
@@ -26,6 +33,9 @@ NotinOOP::~NotinOOP() {
 
     for (int i = 0; i < catalogCount; i++) delete catalog[i];
     delete[] catalog;
+
+	for (int i = 0; i < purchCount; i++) delete allPurchases[i];
+	delete[] allPurchases;
 }
 
 Fragrance* NotinOOP::findFragrance(const char* name) const {
