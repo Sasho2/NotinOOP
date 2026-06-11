@@ -9,29 +9,48 @@ void Buyer::resizeCart() {
     cart = temp;
 }
 
+void Buyer::resizePurchases() {
+    purchCapacity = (purchCapacity == 0) ? 2 : purchCapacity * 2;
+    Purchase** temp = new Purchase * [purchCapacity];
+    for (int i = 0; i < purchCount; i++) temp[i] = purchases[i];
+    delete[] purchases;
+    purchases = temp;
+}
+
+void Buyer::resizeDiscounts() {
+    discCapacity = (discCapacity == 0) ? 2 : discCapacity * 2;
+    Discount** temp = new Discount * [discCapacity];
+    for (int i = 0; i < discCount; i++) temp[i] = discounts[i];
+    delete[] discounts;
+    discounts = temp;
+}
+
 Buyer::Buyer(int id, const char* uname, const char* pass)
-    : User(id, uname, pass), balance(0.0), cart(nullptr), cartCount(0), cartCapacity(0), purchases(nullptr), purchCount(0), purchCapacity(0) {
+    : User(id, uname, pass), balance(0.0),
+    cart(nullptr), cartCount(0), cartCapacity(0),
+    purchases(nullptr), purchCount(0), purchCapacity(0),
+    discounts(nullptr), discCount(0), discCapacity(0) {
 }
 
 Buyer::~Buyer() {
     delete[] cart;
+
+    for (int i = 0; i < purchCount; i++) {
+        delete purchases[i];
+    }
     delete[] purchases;
+
+    for (int i = 0; i < discCount; i++) {
+        delete discounts[i];
+    }
+    delete[] discounts;
 }
 
-bool Buyer::isAdmin() const { 
-    return false; 
-}
+bool Buyer::isAdmin() const { return false; }
 
-void Buyer::addToBalance(double amount) { 
-    if (amount > 0) balance += amount; 
-}
-double Buyer::getBalance() const {
-    return balance; 
-}
-void Buyer::deductBalance(double amount) {
-    if (amount > 0 && balance >= amount)
-        balance -= amount;
-}
+void Buyer::addToBalance(double amount) { if (amount > 0) balance += amount; }
+double Buyer::getBalance() const { return balance; }
+void Buyer::deductBalance(double amount) { if (amount > 0 && balance >= amount) balance -= amount; }
 
 void Buyer::addToCart(Fragrance* f) {
     if (cartCount == cartCapacity) resizeCart();
@@ -62,20 +81,10 @@ void Buyer::viewCart() const {
         std::cout << "- " << cart[i]->getName().c_str() << " (" << cart[i]->getPrice() << " EUR)\n";
         total += cart[i]->getPrice();
     }
-    std::cout << "Total: " << total << " EUR\n----------------\n";
+    std::cout << "Total raw price: " << total << " EUR\n------------------\n";
 }
 
-void Buyer::emptyCart() {
-    cartCount = 0;
-}
-
-void Buyer::resizePurchases() {
-    purchCapacity = (purchCapacity == 0) ? 2 : purchCapacity * 2;
-    Purchase** temp = new Purchase * [purchCapacity];
-    for (int i = 0; i < purchCount; i++) temp[i] = purchases[i];
-    delete[] purchases;
-    purchases = temp;
-}
+void Buyer::emptyCart() { cartCount = 0; }
 
 void Buyer::addPurchase(Purchase* p) {
     if (purchCount == purchCapacity) resizePurchases();
@@ -90,5 +99,19 @@ void Buyer::viewPurchases() const {
     }
     for (int i = 0; i < purchCount; i++) {
         purchases[i]->show();
+    }
+}
+
+void Buyer::addDiscount(Discount* d) {
+    if (discCount == discCapacity) resizeDiscounts();
+    discounts[discCount++] = d;
+}
+
+void Buyer::removeDiscount(int index) {
+    if (index >= 0 && index < discCount) {
+        delete discounts[index];
+        discounts[index] = discounts[discCount - 1];
+        discounts[discCount - 1] = nullptr;
+        discCount--;
     }
 }

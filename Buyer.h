@@ -2,6 +2,7 @@
 #include "User.h"
 #include "Fragrance.h"
 #include "Purchase.h"
+#include "Discount.h"
 
 class Buyer : public User {
 private:
@@ -15,8 +16,13 @@ private:
     int purchCount;
     int purchCapacity;
 
+    Discount** discounts;
+    int discCount;
+    int discCapacity;
+
     void resizeCart();
     void resizePurchases();
+    void resizeDiscounts();
 
 public:
     Buyer(int id, const char* uname, const char* pass);
@@ -38,4 +44,9 @@ public:
 
     int getCartCount() const { return cartCount; }
     Fragrance* getCartItem(int index) const { return cart[index]; }
+
+    void addDiscount(Discount* d);
+    int getDiscountCount() const { return discCount; }
+    Discount* getDiscount(int index) const { return discounts[index]; }
+    void removeDiscount(int index);
 };
