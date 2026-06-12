@@ -1,19 +1,22 @@
 #include "BrandDiscount.h"
 #include <iostream>
 
-BrandDiscount::BrandDiscount(int dId, double p, Brand target)
-    : Discount(dId, p), targetBrand(target) {
+BrandDiscount::BrandDiscount(int id, double percent, Brand brand)
+    : Discount(id, percent), targetBrand(brand) {
 }
 
-Brand BrandDiscount::getTargetBrand() const { return targetBrand; }
-
-double BrandDiscount::apply(double currentPrice, Brand b) const {
-    if (b == targetBrand) {
-        return currentPrice - (currentPrice * (percent / 100.0));
+double BrandDiscount::apply(double currentPrice, Brand brand) const {
+    if (brand == targetBrand) {
+        return currentPrice - (currentPrice * (discountPercent / 100.0));
     }
     return currentPrice;
 }
 
+Discount* BrandDiscount::clone() const {
+    return new BrandDiscount(*this);
+}
+
 void BrandDiscount::print() const {
-    std::cout << "[Voucher #" << id << "] -" << percent << "% ONLY for " << brandToString(targetBrand) << "!\n";
+    std::cout << "[Brand Discount ID: " << discountId << "] -"
+        << discountPercent << "% for " << brandToString(targetBrand) << "\n";
 }

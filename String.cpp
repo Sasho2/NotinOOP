@@ -2,43 +2,41 @@
 #include <cstring>
 #pragma warning(disable:4996)
 
-void String::copyFrom(const String& other) {
-    size = other.size;
-    data = new char[size + 1];
-    strcpy(data, other.data);
+void String::copyFrom(const char* str) {
+    if (str) {
+        length = strlen(str);
+        data = new char[length + 1];
+        strcpy(data, str);
+    }
+    else {
+        length = 0;
+        data = new char[1];
+        data[0] = '\0';
+    }
 }
 
 void String::free() {
     delete[] data;
+    data = nullptr;
+    length = 0;
 }
 
 String::String() {
-    size = 0;
-    data = new char[1];
-    data[0] = '\0';
+    copyFrom("");
 }
 
 String::String(const char* str) {
-    if (!str) {
-        size = 0;
-        data = new char[1];
-        data[0] = '\0';
-    }
-    else {
-        size = strlen(str);
-        data = new char[size + 1];
-        strcpy(data, str);
-    }
+    copyFrom(str);
 }
 
 String::String(const String& other) {
-    copyFrom(other);
+    copyFrom(other.data);
 }
 
 String& String::operator=(const String& other) {
     if (this != &other) {
         free();
-        copyFrom(other);
+        copyFrom(other.data);
     }
     return *this;
 }
@@ -51,10 +49,14 @@ const char* String::c_str() const {
     return data;
 }
 
-int String::length() const {
-    return size;
+size_t String::getLength() const {
+    return length;
 }
 
 bool String::operator==(const String& other) const {
     return strcmp(data, other.data) == 0;
+}
+
+bool String::operator!=(const String& other) const {
+    return !(*this == other);
 }

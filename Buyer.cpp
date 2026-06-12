@@ -53,11 +53,15 @@ Buyer::~Buyer() {
     delete[] cart;
     delete[] purchases;
     delete[] wishlist;
-    for (int i = 0; i < discCount; i++) delete discounts[i];
+
+    for (int i = 0; i < discCount; i++) {
+        delete discounts[i];
+    }
     delete[] discounts;
 }
 
 bool Buyer::isAdmin() const { return false; }
+
 void Buyer::addToBalance(double amount) { if (amount > 0) balance += amount; }
 double Buyer::getBalance() const { return balance; }
 void Buyer::deductBalance(double amount) { if (amount > 0 && balance >= amount) balance -= amount; }
@@ -99,6 +103,7 @@ void Buyer::viewCart() const {
         std::cout << "Empty.\n";
         return;
     }
+
     double total = 0;
     for (int i = 0; i < cartCount; i++) {
         std::cout << "- " << cart[i]->getName().c_str() << " (" << cart[i]->getDiscountedPrice() << " EUR)\n";
@@ -145,18 +150,23 @@ void Buyer::addPurchase(Purchase* p) {
 void Buyer::viewBought() const {
     std::cout << "\n--- Successful Purchases ---\n";
     for (int i = 0; i < purchCount; i++) {
-        if (purchases[i]->getStatus() == OrderStatus::DELIVERED) purchases[i]->show();
+        if (purchases[i]->getStatus() == OrderStatus::DELIVERED) {
+            purchases[i]->show();
+        }
     }
 }
 
 void Buyer::viewPurchases() const {
     std::cout << "\n--- All Purchases ---\n";
-    for (int i = 0; i < purchCount; i++) purchases[i]->show();
+    for (int i = 0; i < purchCount; i++) {
+        purchases[i]->show();
+    }
 }
 
 bool Buyer::canReview(Fragrance* f) const {
     if (!f) return false;
     int boughtOrders = 0;
+
     for (int i = 0; i < purchCount; i++) {
         for (int j = 0; j < purchases[i]->getFragCount(); j++) {
             if (purchases[i]->getFragrance(j) == f) {
@@ -165,6 +175,7 @@ bool Buyer::canReview(Fragrance* f) const {
             }
         }
     }
+
     int writtenReviews = f->getReviewCountByUser(username.c_str());
     return boughtOrders > writtenReviews;
 }
@@ -172,7 +183,9 @@ bool Buyer::canReview(Fragrance* f) const {
 bool Buyer::hasBought(const char* fName) const {
     for (int i = 0; i < purchCount; i++) {
         for (int j = 0; j < purchases[i]->getFragCount(); j++) {
-            if (equalsIgnoreCase(purchases[i]->getFragrance(j)->getName().c_str(), fName)) return true;
+            if (equalsIgnoreCase(purchases[i]->getFragrance(j)->getName().c_str(), fName)) {
+                return true;
+            }
         }
     }
     return false;

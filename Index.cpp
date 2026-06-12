@@ -1,3 +1,4 @@
+#include <iostream>
 #include "NotinOOP.h"
 
 int main() {
@@ -6,8 +7,6 @@ int main() {
     store.loadFromFile("database.txt");
 
     store.run();
-
-    store.saveToFile("database.txt");
 
     return 0;
 }

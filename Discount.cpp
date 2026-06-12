@@ -1,9 +1,7 @@
 #include "Discount.h"
+#include <iostream>
 
-Discount::Discount(int dId, double p) : id(dId), percent(p) {
-    if (percent < 0) percent = 0;
-    if (percent > 100) percent = 100;
-}
+Discount::Discount(int id, double percent) : discountId(id), discountPercent(percent) {}
 
-int Discount::getId() const { return id; }
-double Discount::getPercent() const { return percent; }
+int Discount::getId() const { return discountId; }
+double Discount::getPercent() const { return discountPercent; }

@@ -13,7 +13,9 @@ static bool equalsIgnoreCase(const char* a, const char* b) {
 void Fragrance::resizeReviews() {
     reviewCapacity = (reviewCapacity == 0) ? 2 : reviewCapacity * 2;
     Review** temp = new Review * [reviewCapacity];
-    for (int i = 0; i < reviewCount; i++) temp[i] = reviews[i];
+    for (int i = 0; i < reviewCount; i++) {
+        temp[i] = reviews[i];
+    }
     delete[] reviews;
     reviews = temp;
 }
@@ -24,7 +26,9 @@ Fragrance::Fragrance(int id, const char* n, Brand b, double p, FragranceFamily f
 }
 
 Fragrance::~Fragrance() {
-    for (int i = 0; i < reviewCount; i++) delete reviews[i];
+    for (int i = 0; i < reviewCount; i++) {
+        delete reviews[i];
+    }
     delete[] reviews;
 }
 
@@ -48,7 +52,9 @@ void Fragrance::setSaleDiscount(double percent) {
 FragranceFamily Fragrance::getFamily() const { return family; }
 int Fragrance::getQuantity() const { return quantity; }
 
-void Fragrance::addQuantity(int amount) { if (amount > 0) quantity += amount; }
+void Fragrance::addQuantity(int amount) {
+    if (amount > 0) quantity += amount;
+}
 
 bool Fragrance::decreaseQuantity() {
     if (quantity > 0) {
@@ -62,7 +68,9 @@ bool Fragrance::getIsDeleted() const { return isDeleted; }
 void Fragrance::markAsDeleted() { isDeleted = true; }
 
 void Fragrance::addReview(Review* r) {
-    if (reviewCount == reviewCapacity) resizeReviews();
+    if (reviewCount == reviewCapacity) {
+        resizeReviews();
+    }
     reviews[reviewCount++] = r;
 }
 
@@ -82,7 +90,9 @@ bool Fragrance::removeReview(int rId) {
 double Fragrance::getRating() const {
     if (reviewCount == 0) return 0.0;
     double sum = 0;
-    for (int i = 0; i < reviewCount; i++) sum += reviews[i]->getRating();
+    for (int i = 0; i < reviewCount; i++) {
+        sum += reviews[i]->getRating();
+    }
     return sum / reviewCount;
 }
 
@@ -101,9 +111,13 @@ void Fragrance::printReviews() const {
     }
     std::cout << "\n--- Reviews for " << name.c_str() << " ---\n";
     std::cout << "Average Rating: " << getRating() << " / 5.0\n";
-    if (reviewCount == 0) std::cout << "[Info] No reviews yet.\n";
+    if (reviewCount == 0) {
+        std::cout << "[Info] No reviews yet.\n";
+    }
     else {
-        for (int i = 0; i < reviewCount; i++) reviews[i]->print();
+        for (int i = 0; i < reviewCount; i++) {
+            reviews[i]->print();
+        }
     }
     std::cout << "-----------------------\n";
 }

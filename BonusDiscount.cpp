@@ -1,18 +1,21 @@
 #include "BonusDiscount.h"
 #include <iostream>
 
-BonusDiscount::BonusDiscount(int dId, double p, double bonus)
-    : Discount(dId, p), flatBonus(bonus) {
+BonusDiscount::BonusDiscount(int id, double percent, double bonus)
+    : Discount(id, percent), bonusAmount(bonus) {
 }
 
-double BonusDiscount::getBonus() const { return flatBonus; }
+double BonusDiscount::apply(double currentPrice, Brand brand) const {
+    double newPrice = currentPrice - (currentPrice * (discountPercent / 100.0));
+    newPrice -= bonusAmount;
+    return (newPrice < 0) ? 0.0 : newPrice;
+}
 
-double BonusDiscount::apply(double currentPrice, Brand b) const {
-    double afterPercent = currentPrice - (currentPrice * (percent / 100.0));
-    double finalPrice = afterPercent - flatBonus;
-    return (finalPrice < 0) ? 0 : finalPrice;
+Discount* BonusDiscount::clone() const {
+    return new BonusDiscount(*this);
 }
 
 void BonusDiscount::print() const {
-    std::cout << "[Voucher #" << id << "] -" << percent << "% AND -" << flatBonus << " EUR flat bonus!\n";
+    std::cout << "[Bonus Discount ID: " << discountId << "] -"
+        << discountPercent << "% AND -" << bonusAmount << " EUR\n";
 }
