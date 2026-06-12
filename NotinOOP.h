@@ -19,6 +19,10 @@ private:
     int purchCount;
     int purchCapacity;
 
+    String* blacklist;
+    int blacklistCount;
+    int blacklistCapacity;
+
     User* loggedInUser;
 
     int nextPurchaseId;
@@ -27,15 +31,18 @@ private:
     void resizeUsers();
     void resizeCatalog();
     void resizePurchases();
+    void resizeBlacklist();
 
 public:
     NotinOOP();
     ~NotinOOP();
 
     void run();
-    Fragrance* findFragrance(const char* name) const;
-    void handleCheckout();
 
     void saveToFile(const char* filename) const;
     void loadFromFile(const char* filename);
+
+    Fragrance* findFragrance(const char* name) const;
+    void handleCheckout();
+    void handleRecommend();
 };
