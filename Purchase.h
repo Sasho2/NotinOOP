@@ -11,23 +11,28 @@ private:
     Fragrance** fragrances;
     int fragCount;
     int fragCapacity;
+
     double totalPrice;
 
-    void resizeFragrances();
+    void resize();
 
 public:
     Purchase(int pId, int uId);
     ~Purchase();
 
-    int getId() const;
-    int getUserId() const;
-    OrderStatus getStatus() const;
-    void setStatus(OrderStatus s);
-
-    int getFragCount() const;
-    Fragrance* getFragrance(int index) const;
-    double getTotalPrice() const;
+    Purchase(const Purchase&) = delete;
+    Purchase& operator=(const Purchase&) = delete;
 
     void addFragrance(Fragrance* f, double finalPrice);
+
+    void setStatus(OrderStatus s);
+    OrderStatus getStatus() const;
+    int getId() const;
+    int getUserId() const;
+
+    int getFragCount() const { return fragCount; }
+    Fragrance* getFragrance(int index) const { return fragrances[index]; }
+    double getTotalPrice() const { return totalPrice; }
+
     void show() const;
 };

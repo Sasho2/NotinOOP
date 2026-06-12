@@ -8,16 +8,13 @@ protected:
     String password;
 
 public:
-    User(int id, const char* uname, const char* pass)
-        : userId(id), username(uname), password(pass) {
-    }
+    User(int id, const char* uname, const char* pass);
     virtual ~User() = default;
 
-    int getId() const { return userId; }
-    const String& getUsername() const { return username; }
-    bool checkPassword(const char* pass) const { return password == String(pass); }
+    int getId() const;
+    const String& getUsername() const;
+    const String& getPassword() const;
+    bool checkPassword(const char* pass) const;
 
-    const String& getPassword() const { return password; }
-
-    virtual bool isAdmin() const = 0;   
+    virtual bool isAdmin() const = 0;
 };

@@ -4,9 +4,9 @@
 class String {
 private:
     char* data;
-    int size;
+    size_t length;
 
-    void copyFrom(const String& other);
+    void copyFrom(const char* str);
     void free();
 
 public:
@@ -17,7 +17,8 @@ public:
     ~String();
 
     const char* c_str() const;
-    int length() const;
+    size_t getLength() const;
 
     bool operator==(const String& other) const;
+    bool operator!=(const String& other) const;
 };
