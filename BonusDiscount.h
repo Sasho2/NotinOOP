@@ -3,12 +3,14 @@
 
 class BonusDiscount : public Discount {
 private:
-    double flatBonus;
+    double bonusAmount;
 
 public:
-    BonusDiscount(int dId, double p, double bonus);
+    BonusDiscount(int id, double percent, double bonus);
 
-    double getBonus() const;
-    double apply(double currentPrice, Brand b) const override;
+    double apply(double currentPrice, Brand brand) const override;
+    Discount* clone() const override;
     void print() const override;
+
+    double getBonus() const { return bonusAmount; }
 };

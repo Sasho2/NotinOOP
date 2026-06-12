@@ -3,16 +3,18 @@
 
 class Discount {
 protected:
-    int id;
-    double percent;
+    int discountId;
+    double discountPercent;
 
 public:
-    Discount(int dId, double p);
+    Discount(int id, double percent);
     virtual ~Discount() = default;
+
+    virtual double apply(double currentPrice, Brand brand) const = 0;
+
+    virtual Discount* clone() const = 0;
 
     int getId() const;
     double getPercent() const;
-
-    virtual double apply(double currentPrice, Brand b) const = 0;
     virtual void print() const = 0;
 };

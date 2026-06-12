@@ -6,9 +6,11 @@ private:
     Brand targetBrand;
 
 public:
-    BrandDiscount(int dId, double p, Brand target);
+    BrandDiscount(int id, double percent, Brand brand);
 
-    Brand getTargetBrand() const;
-    double apply(double currentPrice, Brand b) const override;
+    double apply(double currentPrice, Brand brand) const override;
+    Discount* clone() const override;
     void print() const override;
+
+    Brand getTargetBrand() const { return targetBrand; }
 };

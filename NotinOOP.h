@@ -33,6 +33,9 @@ private:
     void resizePurchases();
     void resizeBlacklist();
 
+    void handleCheckout();
+    void handleRecommend();
+
 public:
     NotinOOP();
     ~NotinOOP();
@@ -43,6 +46,4 @@ public:
     void loadFromFile(const char* filename);
 
     Fragrance* findFragrance(const char* name) const;
-    void handleCheckout();
-    void handleRecommend();
 };
