@@ -4,7 +4,6 @@
 #include <iostream>
 #include <cstdlib>
 #include <iomanip>
-#include <cctype>
 
 void NotinOOP::handleCheckout() {
     if (!loggedInUser || loggedInUser->isAdmin()) return;
@@ -179,6 +178,7 @@ void NotinOOP::handleRecommend() {
     std::cout << "======================================================================\n";
 
     int recommendedCount = 0;
+    Fragrance* recs[3] = { nullptr, nullptr, nullptr };
 
     if (itemsAnalyzed > 0) {
         int favFamilyInt = 0, favBrandInt = 0;
@@ -191,35 +191,52 @@ void NotinOOP::handleRecommend() {
         FragranceFamily favFamily = static_cast<FragranceFamily>(favFamilyInt);
         Brand favBrand = static_cast<Brand>(favBrandInt);
 
-        std::cout << " [ Profile ] We noticed you love " << brandToString(favBrand)
-            << " and " << familyToString(favFamily) << " notes.\n\n";
+        std::cout << " [ Profile ] Favorite Brand: " << brandToString(favBrand)
+            << " | Favorite Notes: " << familyToString(favFamily) << "\n\n";
 
         for (int i = 0; i < catalogCount && recommendedCount < 3; i++) {
-            if (!catalog[i]->getIsDeleted() && (catalog[i]->getBrand() == favBrand || catalog[i]->getFamily() == favFamily)) {
-                if (!buyer->hasBought(catalog[i]->getName().c_str()) && !buyer->isInWishlist(catalog[i]->getName().c_str())) {
-                    std::cout << "  -> [MATCH] " << catalog[i]->getName().c_str()
-                        << " | " << brandToString(catalog[i]->getBrand())
-                        << " | " << catalog[i]->getDiscountedPrice() << " EUR\n";
-                    recommendedCount++;
+            Fragrance* c = catalog[i];
+            if (!c->getIsDeleted() && !buyer->hasBought(c->getName().c_str()) && !buyer->isInWishlist(c->getName().c_str())) {
+                if (c->getBrand() == favBrand && c->getFamily() == favFamily) {
+                    std::cout << "  -> [PERFECT MATCH] " << c->getName().c_str() << " | " << c->getDiscountedPrice() << " EUR\n";
+                    recs[recommendedCount++] = c;
+                }
+            }
+        }
+
+        for (int i = 0; i < catalogCount && recommendedCount < 3; i++) {
+            Fragrance* c = catalog[i];
+            bool alreadyIn = false;
+            for (int r = 0; r < recommendedCount; r++) if (recs[r] == c) alreadyIn = true;
+
+            if (!alreadyIn && !c->getIsDeleted() && !buyer->hasBought(c->getName().c_str()) && !buyer->isInWishlist(c->getName().c_str())) {
+                if (c->getBrand() == favBrand || c->getFamily() == favFamily) {
+                    std::cout << "  -> [GOOD MATCH] " << c->getName().c_str() << " | " << c->getDiscountedPrice() << " EUR\n";
+                    recs[recommendedCount++] = c;
                 }
             }
         }
     }
+    else {
+        std::cout << " [!] No purchase history yet. Let's start with the bestsellers:\n\n";
+    }
 
-    if (recommendedCount == 0) {
-        if (itemsAnalyzed > 0) {
-            std::cout << " [!] You already own or wishlisted all our best matches!\n";
-        }
-        else {
-            std::cout << " [!] You don't have purchase history or a wishlist yet.\n";
-        }
-        std::cout << " Here are the top-rated masterpieces everyone is talking about:\n\n";
-
+    if (recommendedCount < 3) {
         Fragrance** sorted = new Fragrance * [catalogCount];
-        for (int i = 0; i < catalogCount; i++) sorted[i] = catalog[i];
+        int validCount = 0;
 
-        for (int i = 0; i < catalogCount - 1; i++) {
-            for (int j = i + 1; j < catalogCount; j++) {
+        for (int i = 0; i < catalogCount; i++) {
+            Fragrance* c = catalog[i];
+            bool alreadyIn = false;
+            for (int r = 0; r < recommendedCount; r++) if (recs[r] == c) alreadyIn = true;
+
+            if (!alreadyIn && !c->getIsDeleted() && !buyer->hasBought(c->getName().c_str()) && !buyer->isInWishlist(c->getName().c_str())) {
+                sorted[validCount++] = c;
+            }
+        }
+
+        for (int i = 0; i < validCount - 1; i++) {
+            for (int j = i + 1; j < validCount; j++) {
                 if (sorted[j]->getRating() > sorted[i]->getRating()) {
                     Fragrance* temp = sorted[i];
                     sorted[i] = sorted[j];
@@ -228,16 +245,18 @@ void NotinOOP::handleRecommend() {
             }
         }
 
-        int topCount = 0;
-        for (int i = 0; i < catalogCount && topCount < 3; i++) {
-            if (!sorted[i]->getIsDeleted() && !buyer->hasBought(sorted[i]->getName().c_str()) && !buyer->isInWishlist(sorted[i]->getName().c_str())) {
-                std::cout << "  -> [TOP RATED " << std::setprecision(2) << sorted[i]->getRating() << std::setprecision(6) << "/5] "
-                    << sorted[i]->getName().c_str() << " | " << sorted[i]->getDiscountedPrice() << " EUR\n";
-                topCount++;
-            }
+        for (int i = 0; i < validCount && recommendedCount < 3; i++) {
+            std::cout << "  -> [DISCOVERY - " << std::setprecision(2) << sorted[i]->getRating() << std::setprecision(6) << "/5] "
+                << sorted[i]->getName().c_str() << " | " << sorted[i]->getDiscountedPrice() << " EUR\n";
+            recs[recommendedCount++] = sorted[i];
         }
-        if (topCount == 0) std::cout << "  -> You literally own everything good in the store.\n";
 
         delete[] sorted;
     }
+
+    if (recommendedCount == 0) {
+        std::cout << "  -> You literally own or wishlisted everything. You broke the store.\n";
+    }
+
+    std::cout << "======================================================================\n";
 }
