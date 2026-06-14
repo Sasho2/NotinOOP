@@ -1,5 +1,6 @@
 #include "Fragrance.h"
 #include <iostream>
+#include <iomanip>
 #include <cctype>
 
 static bool equalsIgnoreCase(const char* a, const char* b) {
@@ -110,7 +111,7 @@ void Fragrance::printReviews() const {
         return;
     }
     std::cout << "\n--- Reviews for " << name.c_str() << " ---\n";
-    std::cout << "Average Rating: " << getRating() << " / 5.0\n";
+    std::cout << std::setprecision(2) << "Average Rating: " << getRating() << std::setprecision(6) << " / 5.0\n";
     if (reviewCount == 0) {
         std::cout << "[Info] No reviews yet.\n";
     }

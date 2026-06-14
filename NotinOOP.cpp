@@ -1,6 +1,7 @@
 ﻿#include "NotinOOP.h"
 #include <iostream>
 #include <cstring>
+#include <iomanip>
 #include <cstdlib>
 #include <cctype>
 
@@ -122,7 +123,7 @@ void NotinOOP::run() {
                     std::cout << catalog[i]->getPrice() << " EUR";
                 }
 
-                std::cout << " | Rating: " << catalog[i]->getRating() << "/5"
+                std::cout << " | Rating: " << std::setprecision(2) << catalog[i]->getRating() << std::setprecision(6) << "/5"
                     << " | In Stock: " << catalog[i]->getQuantity() << "\n";
                 visibleCount++;
             }

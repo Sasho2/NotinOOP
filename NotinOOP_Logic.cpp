@@ -3,6 +3,7 @@
 #include "BrandDiscount.h"
 #include <iostream>
 #include <cstdlib>
+#include <iomanip>
 #include <cctype>
 
 void NotinOOP::handleCheckout() {
@@ -230,7 +231,7 @@ void NotinOOP::handleRecommend() {
         int topCount = 0;
         for (int i = 0; i < catalogCount && topCount < 3; i++) {
             if (!sorted[i]->getIsDeleted() && !buyer->hasBought(sorted[i]->getName().c_str()) && !buyer->isInWishlist(sorted[i]->getName().c_str())) {
-                std::cout << "  -> [TOP RATED " << sorted[i]->getRating() << "/5] "
+                std::cout << "  -> [TOP RATED " << std::setprecision(2) << sorted[i]->getRating() << std::setprecision(6) << "/5] "
                     << sorted[i]->getName().c_str() << " | " << sorted[i]->getDiscountedPrice() << " EUR\n";
                 topCount++;
             }

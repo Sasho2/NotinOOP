@@ -1,4 +1,5 @@
 #include "Review.h"
+#include <iomanip>
 #include <iostream>
 
 Review::Review(int rId, const char* auth, const char* comm, int rate)
@@ -14,6 +15,6 @@ const String& Review::getAuthor() const { return author; }
 const String& Review::getComment() const { return comment; }
 
 void Review::print() const {
-    std::cout << "User " << author.c_str() << " rated it " << rating << "/5:\n";
+    std::cout << "User " << author.c_str() << " rated it " << std::setprecision(2) << rating << std::setprecision(6) << "/5:\n";
     std::cout << "  \"" << comment.c_str() << "\"\n";
 }
